@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# [Luke Weber - 12/16/16]
+# Script to run Bayesian optimization on a Support Vector Machine
+# trained on Optical Character Recognition data
+
+EXP_DIR=`pwd`
+SPRMNT_DIR="spearmint/spearmint/"
+
+echo $EXP_DIR
+SEP="----------------------------------"
+
+# Start MongoDB daemon
+echo $SEP
+sudo mongod --fork --logpath "mongo/log/mongodb.log" --dbpath "mongo/db"
+
+# Start Spearmint
+echo $SEP
+cd $SPRMNT_DIR
+python main.py "$EXP_DIR"
+
+# Cleanup
+echo $SEP
+cd $EXP_DIR
+rm validation.txt train.txt *.pyc
